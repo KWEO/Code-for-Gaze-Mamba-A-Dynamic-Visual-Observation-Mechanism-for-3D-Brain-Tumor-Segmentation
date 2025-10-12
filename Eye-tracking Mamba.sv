@@ -1,9 +1,4 @@
 class LayerNorm(nn.Module):
-    r""" LayerNorm that supports two data formats: channels_last (default) or channels_first.
-    The ordering of the dimensions in the inputs. channels_last corresponds to inputs with
-    shape (batch_size, height, width, channels) while channels_first corresponds to inputs
-    with shape (batch_size, channels, height, width).
-    """
     def __init__(self, normalized_shape, eps=1e-6, data_format="channels_last"):
         super().__init__()
         self.weight = nn.Parameter(torch.ones(normalized_shape))
@@ -97,10 +92,10 @@ class MambaLayer(nn.Module):
         self.dim = dim
         self.mamba = Mamba(
                 d_model=dim,
-                dim = dim, # Model dimension d_model
-                d_state=d_state,  # SSM state expansion factor
-                d_conv=d_conv,    # Local convolution width
-                expand=expand,    # Block expansion factor
+                dim = dim, 
+                d_state=d_state,  
+                d_conv=d_conv,    
+                expand=expand,   
                 patch_size = patch_size,
                 nslices=num_slices,
         )
@@ -129,3 +124,4 @@ class MlpChannel(nn.Module):
         x = self.act(x)
         x = self.fc2(x)
         return x
+
